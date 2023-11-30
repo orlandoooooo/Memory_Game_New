@@ -1,6 +1,7 @@
 import memory_game
-from cards import Card, make_card, value_above, value_below, build_deck, values_within_range, adjacent
-from players import Player
+from cards import Card, make_card, value_above, value_below, \
+    build_deck, values_within_range, adjacent
+from players import Player, winning_players
 import pytest
 
 def test_make_card():
@@ -25,6 +26,12 @@ def test_Player():
     assert player.score == 1
     assert player.high_score == 1
     assert player.low_score == 1
+    player.add_score(2)
+    assert player.games_played == 2
+    assert player.scores == [1, 2]
+    assert player.score == 2
+    assert player.high_score == 2
+    assert player.low_score == 1
     player.reset_scores()
     assert player.scores == []    
     assert player.games_played == 0
@@ -32,6 +39,37 @@ def test_Player():
     assert player.low_score == None
     assert player.score == None
 
+def test_winning_players():
+    player1 = Player("Player 1")
+    player1.add_score(1)
+    player2 = Player("Player 2")
+    player2.add_score(2)
+    players = [player1, player2]
+    winners = winning_players(players)
+    assert len(winners) == 1
+    player1.add_score(1)
+    player1.add_score(2)
+    winners = winning_players(players)
+    assert player1.score == 2
+    assert player2.score == 2
+    player1.add_score(3)
+    assert player1.score == 3
+    assert player1.games_played == 4
+    assert player2.games_played == 1
+    player1.add_score(5)
+    player2.add_score(5)
+    winners = winning_players(players)
+    assert len(winners) == 2
+    player1.add_score(1)
+    assert player1.score == 1
+    winners = winning_players(players)
+    assert len(winners) == 1
+    assert winners[0].score == 5
+    player1.add_score(5)
+    winners = winning_players(players)
+    assert len(winners) == 2
+    assert winners[0].score == 5
+    assert winners[1].score == 5
 
 def test_value_above():
     card = make_card("Ace", "Diamonds")

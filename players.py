@@ -7,6 +7,32 @@ def get_random_player(number_of_players):
     return player
 
 
+# Return winning player(s) as a list, empty list if no winners
+def winning_players(players):
+    # Empty list of winner
+    winners = []
+    # Score to match or beat
+    high_score = None
+    # Loop through all players
+    for player in players:
+        score = player.score
+        # If player has a score
+        if score != None:
+            # If first score:
+            if high_score == None:
+                high_score = score
+                winners.append(player)
+            # Else if matches high score
+            elif score == high_score:
+                winners.append(player)
+            # Else is beats high score
+            elif score > high_score:
+                high_score = score
+                winners = [player]
+    # Return list
+    return winners
+    
+
 # Define Player class
 class Player:
     # __init__ always called when creating object
@@ -31,7 +57,6 @@ class Player:
         except:
             raise ValueError
         
-
     def reset_scores(self):
         self.scores = []
 
