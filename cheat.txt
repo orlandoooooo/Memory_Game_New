@@ -1,0 +1,71 @@
+Plan for mental mini cheat (next game?)
+
+intro, splash, title, etc.
+menu: rules or start
+deal hands
+show hands
+    "warning - will now show player 1"
+    player 1 hand
+    "warning - will now show player 2"
+    player 2 hand
+choose first player (random)
+    "first player is ____"
+    store current player as variable
+# 1 turn
+while True:
+    # for current player
+    # if playing regular cheat:
+        choose cards from hand (allow only cards from hand)
+        choose declaration (allow any cards)
+    # for mental mini cheat, allow any input, but check if player thinks they are cheating
+        choose cards from hand (do not display hand - allow any cards)
+        choose declaration (allow any cards)
+    if chosen cards are not in hand, player cheated/forgot and picks up cards
+        forgot = True
+        player.forgot_count += 1
+        jump check win (or skip code using 'forgot = True' variable)
+    update variable cheated
+    place cards and remove cards from hand
+    (else: turn) <- if using label
+    # switch current player
+    # probably unnecessary condition (cards always in pile)
+    if cards in pile:
+        # check if declare cheat
+        menu:
+            cheat
+            no cheat
+        store cheated = True/False
+        if said cheat:
+            # check if cheated
+            reveal if cheated or not
+            if cheated:
+                display warning and show cards to not current player
+                dealing (not-current) player picks up
+                lost_cheat and/or won_cheat variables = ? player
+            else:
+                display warning and show cards to current player
+                non-dealing (current) player picks up
+                lost_cheat and/or won_cheat variables = ? player
+        decide next current player
+            # option 1: player do not change current player
+            # option 2: base current player on if cheated or not
+                # option 1: player who picked up (lost the cheat) plays
+                    if cheated, current player is lost_cheat
+                    else current player doesn't change
+                # option 2: player who didn't pick up plays
+                    if cheated, current player is won_cheat
+                    else current player doesn't change
+            # option 3: if called_cheat and cheated:
+                player who didn't pick up plays
+                if cheated, current player is won_cheat
+    (if renpy: jump win)
+    # check_win
+    if one player hand empty:
+        they are winner
+        reveal winner
+        reveal hands
+        reveal both players' forgot_count
+        jump menu
+    (if renpy: jump turn)
+
+
