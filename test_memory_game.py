@@ -14,6 +14,24 @@ def test_make_card():
     assert card.value == 1
     assert card.color == "Jokers"
 
+def test_Player():
+    player = Player("Player_str")
+    assert f"{player}" == "Player_str"
+    assert player.games_played == 0
+    assert player.scores == []
+    player.add_score(1)
+    assert player.games_played == 1
+    assert player.scores == [1]
+    assert player.score == 1
+    assert player.high_score == 1
+    assert player.low_score == 1
+    player.reset_scores()
+    assert player.scores == []    
+    assert player.games_played == 0
+    assert player.high_score == None
+    assert player.low_score == None
+    assert player.score == None
+
 
 def test_value_above():
     card = make_card("Ace", "Diamonds")
