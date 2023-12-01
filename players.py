@@ -6,6 +6,17 @@ def get_random_player(number_of_players):
     player  = random.randint(1, number_of_players)
     return player
 
+# Return list of players
+def make_players(total, first):
+        # Sequence if e.g. 5 players, first player is player 3: 3 4 5 1 2
+    player_list = []
+    i = first
+    for _ in range(total):
+        if i > total:
+            i = 1
+        player_list.append(Player(f"Player {i}"))
+        i += 1
+    return player_list
 
 # Return winning player(s) as a list, empty list if no winners
 def winning_players(players):
